@@ -1,5 +1,7 @@
 {
   "name": "cepillo",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

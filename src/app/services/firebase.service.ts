@@ -7,7 +7,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 })
 export class FirebaseService {
 
-  collectionName = 'chats';
+  collectionName = 'whatsapps';
 
   constructor(
     private firestore: AngularFirestore

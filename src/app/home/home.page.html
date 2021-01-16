@@ -1,20 +1,63 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+    <ion-title >Chateando... </ion-title>
+    <ion-title class="userName">{{messageData.Name}}, dice :</ion-title>
+    <ion-icon name="search-outline" slot="end"></ion-icon>
+    <ion-icon name="menu-outline" slot="end"></ion-icon>
+      <ion-button (click)="logout()" color="primary" slot="end">Salir</ion-button>
+    
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">EXAMEN BIMESTRAL GABRIEL IBUJÉS</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+<ion-content #content padding id="container">
+  <ion-card *ngFor="let messageData of messageList" >
+    <ion-card-header>
+      {{messageData.Name}}: 
+    </ion-card-header>
+    <ion-card-content>
+      {{messageData.Message}}
+    </ion-card-content>
+    <ion-card-content>
+      <ion-img width="100" height="100" [src]="messageData.Image"></ion-img>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
+
+  
+  <ion-card-content class="imageContainerButton"  *ngIf="!isUploading && !isUploaded">
+    <ion-button class="imageContainer">
+      <input id="uploadBtn" type="file" class="upload" (change)="uploadFile($event.target.files)" />
+    </ion-button>
+  </ion-card-content>
+
+  <ion-card class="ion-text-center" *ngIf="isUploading && !isUploaded">
+
+    <ion-card-content>
+      <div *ngIf="percentage | async as pct">
+        Subiendo: {{ pct | number }}%
+        <ion-progress-bar value="{{ pct / 100 }}"></ion-progress-bar>
+      </div>
+      <div *ngIf="snapshot | async as snap">
+        
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-icon name="camera-outline"></ion-icon>
+  <ion-card class="ion-text-center" *ngIf="!isUploading && isUploaded">
+    
+
+  </ion-card>
+
+<ion-footer id="final-scroll">
+  <ion-toolbar>
+    
+    <ion-input placeholder="Chatea aquí"  [(ngModel)]="messageData.Message"></ion-input>
+
+    <ion-buttons slot="end" >
+      <ion-button (click)="CreateRecord()">
+        <ion-icon name="send"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
